@@ -1,0 +1,15 @@
+---
+- name: Install MariaDB Packages
+  ansible.builtin.package:
+    name: 
+      - mariadb 
+      - mariadb-client
+    state: present
+
+- name: Verify MariaDB Installation
+  ansible.builtin.command: mysql --version
+  register: mysql_version
+
+- name: Print MariaDB Version
+  ansible.builtin.debug:
+    msg: "MariaDB Version: {{ mysql_version.stdout }}"

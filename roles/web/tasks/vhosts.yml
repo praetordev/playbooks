@@ -1,0 +1,20 @@
+---
+- name: Create Dummy VHost Config
+  ansible.builtin.copy:
+    dest: /etc/apache2/conf.d/praetor.conf
+    content: |
+      <VirtualHost *:80>
+          ServerAdmin admin@praetordev.com
+          DocumentRoot /var/www/localhost/htdocs
+          ServerName praetor.local
+      </VirtualHost>
+  notify: Restart Apache
+
+- name: Verify VHost File
+  ansible.builtin.stat:
+    path: /etc/apache2/conf.d/praetor.conf
+  register: vhost_file
+
+- name: Debug VHost Status
+  ansible.builtin.debug:
+    msg: "VHost file created: {{ vhost_file.stat.exists }}"

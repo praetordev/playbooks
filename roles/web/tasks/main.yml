@@ -1,0 +1,17 @@
+---
+- name: Install Apache and PHP
+  ansible.builtin.package:
+    name:
+      - apache2
+      - php-apache2
+      - php
+      - php-mysqli
+    state: present
+
+- name: Start Apache
+  ansible.builtin.command: httpd -k start
+  ignore_errors: yes # Ignore if already running
+
+# FIX: Replaced 'include' with 'include_tasks'
+- name: Configure Virtual Hosts
+  ansible.builtin.include_tasks: vhosts.yml

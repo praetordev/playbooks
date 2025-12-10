@@ -1,0 +1,4 @@
+---
+- name: Restart Apache
+  ansible.builtin.command: httpd -k restart
+  ignore_errors: yes
