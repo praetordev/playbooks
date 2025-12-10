@@ -8,6 +8,12 @@
       - php-mysqli
     state: present
 
+- name: Suppress Apache ServerName warning
+  ansible.builtin.lineinfile:
+    path: /etc/httpd/conf/httpd.conf
+    line: "ServerName localhost"
+    state: present
+
 - name: Start Apache
   ansible.builtin.command: httpd -k start
   ignore_errors: yes # Ignore if already running
