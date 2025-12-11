@@ -9,6 +9,7 @@
 - name: Verify MariaDB Installation
   ansible.builtin.command: mysql --version
   register: mysql_version
+  changed_when: false
 
 - name: Print MariaDB Version
   ansible.builtin.debug:
