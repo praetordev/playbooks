@@ -1,13 +1,13 @@
 ---
-- name: Install Nginx
+- name: Install Apache
   apk:
-    name: nginx
+    name: apache2
     state: present
     update_cache: yes
 
 - name: Create Web Root
   file:
-    path: /var/www/simple
+    path: /var/www/localhost/htdocs
     state: directory
     owner: praetor
     group: praetor
@@ -16,25 +16,14 @@
 - name: Deploy Index Page
   template:
     src: index.html.j2
-    dest: /var/www/simple/index.html
+    dest: /var/www/localhost/htdocs/index.html
     owner: praetor
     group: praetor
     mode: '0644'
 
-- name: Configure Nginx Default Server
-  copy:
-    content: |
-      server {
-          listen 8080 default_server;
-          root /var/www/simple;
-          index index.html;
-          server_name _;
-      }
-    dest: /etc/nginx/http.d/default.conf
-  notify: Restart Nginx
-
-- name: Ensure Nginx is running
+- name: Ensure Apache is running
   service:
-    name: nginx
+    name: apache2
     state: started
     enabled: yes
+
