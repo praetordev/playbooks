@@ -23,7 +23,7 @@ Group apache
 
 # Server Admin
 ServerAdmin {{ apache_admin_email | default('root@localhost') }}
-ServerName {{ ansible_hostname }}
+ServerName {{ inventory_hostname }}
 
 # Document Root
 DocumentRoot "{{ apache_doc_root | default('/var/www/localhost/htdocs') }}"
