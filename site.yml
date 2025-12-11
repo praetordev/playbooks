@@ -11,4 +11,4 @@
   become: yes
   gather_facts: no  # Optimization for dev env
   roles:
-    - web
+    - simple_website
