@@ -1,22 +1,23 @@
 ---
-- name: Install Apache and PHP
-  ansible.builtin.package:
-    name:
-      - apache2
-      - php-apache2
-      - php
-      - php-mysqli
+- name: Install Apache
+  apk:
+    name: apache2
     state: present
 
-- name: Suppress Apache ServerName warning
-  ansible.builtin.lineinfile:
-    path: /etc/httpd/conf/httpd.conf
-    line: "ServerName localhost"
-    state: present
+- name: Deploy httpd.conf
+  template:
+    src: httpd.conf.j2
+    dest: /etc/apache2/httpd.conf
+    owner: root
+    group: root
+    mode: '0644'
+  notify: Restart Apache
 
-- name: Start Apache
-  ansible.builtin.command: httpd -k start
-  ignore_errors: yes # Ignore if already running
+- name: Ensure Apache is running
+  service:
+    name: apache2
+    state: started
+    enabled: yes
 
 # FIX: Replaced 'include' with 'include_tasks'
 - name: Configure Virtual Hosts
