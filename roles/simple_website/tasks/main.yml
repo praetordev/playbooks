@@ -21,6 +21,13 @@
     group: praetor
     mode: '0644'
 
+- name: Suppress FQDN Warning
+  lineinfile:
+    path: /etc/apache2/httpd.conf
+    regexp: '^#?ServerName'
+    line: 'ServerName localhost'
+    state: present
+
 - name: Ensure Apache is running
   command: httpd -k start
   register: apache_start
